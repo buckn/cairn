@@ -1,0 +1,11 @@
+*.swp
+*.swo
+build/
+web/
+*build/
+pfiles/
+client/img/*.png
+client.glsl.h
+*.rdbg
+*.cap
+shaders.glsl.h
