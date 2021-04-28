@@ -12,14 +12,16 @@
 #include "mat.h"
 #include "ren.h"
 
+/*
+    Include csound.h
+*/
+#include "csound.h"
+
 static struct {
     /* ... */
 
     /* input */
     bool keys_down[SAPP_MAX_KEYCODES];
-
-    /* player */
-    Vec2 pos, vel, dir;
 } cli;
 
 void init(void) {
@@ -68,10 +70,6 @@ void event(const sapp_event *ev) {
     case SAPP_EVENTTYPE_MOUSE_UP:;
     case SAPP_EVENTTYPE_MOUSE_DOWN:;
     case SAPP_EVENTTYPE_MOUSE_MOVE:;
-        Vec2 mp = mouse_pos_world(ev->mouse_x, ev->mouse_y);
-        cli.dir.x = mp.x;
-        cli.dir.y = mp.y;
-        break;
     default: ;
     };
 }
@@ -87,6 +85,6 @@ sapp_desc sokol_main(int argc, char* argv[]) {
         .event_cb = event,
         .width = 1920,
         .height = 1080,
-        .window_title = "Sokol Cmake Template",
+        .window_title = "Cairn",
     };
 }
