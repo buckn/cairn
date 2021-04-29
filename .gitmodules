@@ -1,3 +1,6 @@
 [submodule "sokol-tools-bin"]
 	path = sokol-tools-bin
 	url = https://github.com/floooh/sokol-tools-bin
+[submodule "csound"]
+	path = csound
+	url = https://github.com/csound/csound

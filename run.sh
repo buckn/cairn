@@ -8,17 +8,11 @@ rm -rf build
 rm -rf web
 
 # Make build directories
-mkdir build -p
-mkdir web -p
+mkdir build
+mkdir web
 
 # Args
 str="'$*'"
-
-# Make sure the csound header is there, if not download it
-if [ ! -f ./csound.h ]; then
-	wget --no-parent -r https://github.com/csound/csound/tree/develop/include/ -nH
-	mv ./csound/csound/tree/develop/include/
-fi
 
 # Make sure that sokol-tools-bin has been initiated, if not initiate it
 a=`ls ./sokol-tools-bin`

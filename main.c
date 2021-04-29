@@ -15,7 +15,7 @@
 /*
     Include csound.h
 */
-#include "csound.h"
+#include "csound/include/csound.h"
 
 static struct {
     /* ... */
