@@ -21,10 +21,21 @@ then
 	git submodule update --init
 fi
 
-# Update Modules
-git submodule update
+# Make sure that csound has been initiated, if not initiate it
+a=`ls ./csound`
+if [[ -z $a ]]
+then
+	git submodule update --init
+fi
 
-if [ str == "'--server'" ]
+# Update Modules
+git submodule foreach --recursive git reset --hard
+
+# Remove Double Precision Include
+sed -i 's/#include "float-version.h"/ /g' ./csound/include/csound.h
+sed -i 's/#include "float-version.h"/ /g' ./csound/include/sysdep.h
+
+if [ $str == "'--server'" ]
 then
 	echo server
 	#server build and run

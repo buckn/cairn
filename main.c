@@ -17,6 +17,22 @@
 */
 #include "csound/include/csound.h"
 
+/*
+    .csd text const
+*/
+const char *csd_text = 
+ "<CsoundSynthesizer> \n"
+ "<CsOptions> -odac </CsOptions> \n"
+ "<CsInstruments> \n"
+ "instr 1 \n"
+ " out(linen(oscili(p4,p5),0.1,p3,0.1)) \n"
+ "endin \n"
+ "</CsInstruments> \n"
+ "<CsScore> \n"
+ "i1 0 5 1000 440 \n"
+ "</CsScore> \n"
+ "</CsoundSynthesizer> \n";
+
 static struct {
     /* ... */
 
@@ -46,6 +62,16 @@ void frame(void) {
 
     /*
         Frame drawing ends here
+    */
+
+    /*
+        Sound rendering begins here
+    */
+    
+
+
+    /*
+        Sound rendering ends here
     */
 
     draw_end();

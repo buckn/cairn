@@ -5,6 +5,9 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 endif()
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 # Linux -pthread shenanigans
 if (CMAKE_SYSTEM_NAME STREQUAL Linux)
     set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -31,7 +34,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL Darwin)
         "-framework AudioToolbox")
 else()
     if (CMAKE_SYSTEM_NAME STREQUAL Linux)
-        target_link_libraries(sokol INTERFACE X11 Xi Xcursor GL asound dl m)
+        target_link_libraries(sokol INTERFACE X11 Xi Xcursor GL asound dl m csound64)
         target_link_libraries(sokol PUBLIC Threads::Threads)
     endif()
 endif()
