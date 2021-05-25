@@ -14,12 +14,7 @@
 #pragma warning(disable:4221)
 #endif
 
-/*
-    Sokol Headers
-*/
-#include "sokol_app.h"
-#include "sokol_gfx.h"
-#include "sokol_glue.h"
+//Shader header include
 #include "shaders.glsl.h"
 
 static struct {

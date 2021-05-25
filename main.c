@@ -1,38 +1,22 @@
 /*
+    Sokol Headers
+*/
+#include "sokol_audio.h"
+#include "sokol_app.h"
+#include "sokol_gfx.h"
+#include "sokol_glue.h"
+
+/*
     Include standard library headers
 */
 #include <math.h>
 #include <assert.h>
 #include <stdbool.h>
 
-/*
-    Include ren.h and mat.h
-*/
-
+//Math file include
 #include "mat.h"
-#include "ren.h"
 
-/*
-    Include csound.h
-*/
-#include "csound/include/csound.h"
-
-/*
-    .csd text const
-*/
-const char *csd_text = 
- "<CsoundSynthesizer> \n"
- "<CsOptions> -odac </CsOptions> \n"
- "<CsInstruments> \n"
- "instr 1 \n"
- " out(linen(oscili(p4,p5),0.1,p3,0.1)) \n"
- "endin \n"
- "</CsInstruments> \n"
- "<CsScore> \n"
- "i1 0 5 1000 440 \n"
- "</CsScore> \n"
- "</CsoundSynthesizer> \n";
-
+//Client state static struct
 static struct {
     /* ... */
 
@@ -40,8 +24,13 @@ static struct {
     bool keys_down[SAPP_MAX_KEYCODES];
 } cli;
 
+//Include renderer and sound header files
+#include "ren.h"
+#include "snd.h"
+
 void init(void) {
     render_init();
+    snd_init();
 }
 
 void frame(void) {
@@ -64,21 +53,12 @@ void frame(void) {
         Frame drawing ends here
     */
 
-    /*
-        Sound rendering begins here
-    */
-    
-
-
-    /*
-        Sound rendering ends here
-    */
-
     draw_end();
 }
 
 void cleanup(void) {
     sg_shutdown();
+    snd_shutdown();
 }
 
 void event(const sapp_event *ev) {
@@ -111,6 +91,6 @@ sapp_desc sokol_main(int argc, char* argv[]) {
         .event_cb = event,
         .width = 1920,
         .height = 1080,
-        .window_title = "Cairn",
+        .window_title = "cairn",
     };
 }
