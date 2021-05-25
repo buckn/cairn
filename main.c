@@ -12,6 +12,7 @@
 #include <math.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 //Math file include
 #include "mat.h"
