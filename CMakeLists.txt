@@ -43,35 +43,35 @@ target_include_directories(sokol INTERFACE sokol)
 #=== EXECUTABLE: game
 
 if(CMAKE_SYSTEM_NAME STREQUAL Windows)
-    set(COMPILE_SHADER_CMD ../sokol-tools-bin/bin/win32/sokol-shdc.exe --input ../shaders.glsl --output ../shaders.glsl.h --slang hlsl5)
+    set(COMPILE_SHADER_CMD ../../sokol-tools-bin/bin/win32/sokol-shdc.exe --input ../../shaders.glsl --output ../../shaders.glsl.h --slang hlsl5)
 elseif(CMAKE_SYSTEM_NAME STREQUAL Darwin)
-    set(COMPILE_SHADER_CMD ../sokol-tools-bin/bin/osx/sokol-shdc --input ../shaders.glsl --output ../shaders.glsl.h --slang metal_macos)
+    set(COMPILE_SHADER_CMD ../../sokol-tools-bin/bin/osx/sokol-shdc --input ../../shaders.glsl --output ../../shaders.glsl.h --slang metal_macos)
 elseif(CMAKE_SYSTEM_NAME STREQUAL Emscripten)
-    set(COMPILE_SHADER_CMD ../sokol-tools-bin/bin/linux/sokol-shdc --input ../shaders.glsl --output ../shaders.glsl.h --slang glsl100)
+    set(COMPILE_SHADER_CMD ../../sokol-tools-bin/bin/linux/sokol-shdc --input ../../shaders.glsl --output ../../shaders.glsl.h --slang glsl100)
 else()
-    set(COMPILE_SHADER_CMD ../sokol-tools-bin/bin/linux/sokol-shdc --input ../shaders.glsl --output ../shaders.glsl.h --slang glsl330)
+    set(COMPILE_SHADER_CMD ../../sokol-tools-bin/bin/linux/sokol-shdc --input ../../shaders.glsl --output ../../shaders.glsl.h --slang glsl330)
 endif()
-add_custom_command(OUTPUT ../shaders.glsl.h
+add_custom_command(OUTPUT ../../shaders.glsl.h
     COMMAND ${COMPILE_SHADER_CMD}
     DEPENDS shaders.glsl
 )
-set_source_files_properties(../shaders.glsl.h PROPERTIES
+set_source_files_properties(../../shaders.glsl.h PROPERTIES
     GENERATED TRUE
 )
 
 if(CMAKE_SYSTEM_NAME STREQUAL Windows)
-    add_executable(game WIN32 main.c ../shaders.glsl.h)
+    add_executable(game WIN32 main.c ../../shaders.glsl.h)
 
     set_target_properties(game PROPERTIES
         LINK_FLAGS /SUBSYSTEM:CONSOLE
     )
 else()
-    add_executable(game main.c ../shaders.glsl.h)
+    add_executable(game main.c ../../shaders.glsl.h)
 endif()
 
 target_link_libraries(game sokol)
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
-    target_link_options(game PUBLIC --shell-file ../sokol/shell.html)
+    target_link_options(game PUBLIC --shell-file ../../sokol/shell.html)
     target_link_options(game PUBLIC -sNO_FILESYSTEM=1 
                                       -sASSERTIONS=1 -sMALLOC=emmalloc --closure=1)
 

@@ -3,13 +3,19 @@
 # Remove Shaders
 rm -f ./shaders.glsl.h
 
-# Remove build directories
+# Remove build dir
 rm -rf build
-rm -rf web
 
-# Make build directories
+# --Make build dirs--
 mkdir build
-mkdir web
+# Dir for native builds
+mkdir build/native
+# Dir for web builds
+mkdir build/web
+# Dir for debugging, logging, output, etc.
+mkdir build/debug
+# Dir for server builds
+mkdir build/server
 
 # Args
 str="'$*'"
@@ -28,23 +34,23 @@ if [ $str == "'--server'" ]
 then
 	echo server
 	#server build and run
-	cd build
-	gcc ./server.c && ./a
+	cd build/server
+	gcc ../../server.c -o ./server && ./server
 else
 	if [ $str == "'--web'" ]
 	then
 		echo web
 		# web client build and run
 		source ~/bin/emsdk/emsdk_env.sh
-		cd web
-		cmake ..
-		emcmake cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel ..
+		cd build/web
+		cmake ../..
+		emcmake cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel ../..
 		cmake --build .
 	else
 		echo desk
 		# native client build and run
-		cd build
-		cmake ..
+		cd build/native
+		cmake ../..
 		cmake --build . && ./game
 	fi
 fi

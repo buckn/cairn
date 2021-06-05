@@ -23,6 +23,7 @@ static struct {
 
     /* input */
     bool keys_down[SAPP_MAX_KEYCODES];
+    int snd_sin_wav;
 } cli;
 
 //Include renderer and sound header files
@@ -90,7 +91,7 @@ sapp_desc sokol_main(int argc, char* argv[]) {
         .frame_cb = frame,
         .cleanup_cb = cleanup,
         .event_cb = event,
-        .width = 1920,
+        .width = 960,
         .height = 1080,
         .window_title = "cairn",
     };
