@@ -117,6 +117,11 @@ static inline Vec2 norm2(Vec2 a) {
     return div2_f(a, mag2(a));
 }
 
+/* float Functions */
+static inline float lerp(float a, float b, float t) {
+    return (a * (1.0 - t)) + (b * t);
+}
+
 /* Mat4 Functions */
 static inline Mat4 scale4x4(Vec2 s) {
     return (Mat4) {
