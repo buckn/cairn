@@ -40,6 +40,12 @@ Vec4 vec4(float x, float y, float z, float w) {
 	};
 }
 
+Vec4 vec4_frm_2(Vec2 a, Vec2 b) {
+    return (Vec4) {
+        a.x, a.y, b.x, b.y
+    };
+}
+
 /* Vec2 Functions */
 static inline Vec2 vec2(float x, float y) {
     return (Vec2){ x, y };

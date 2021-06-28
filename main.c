@@ -23,6 +23,7 @@ static struct {
 
     /* input */
     bool keys_down[SAPP_MAX_KEYCODES];
+    Vec2 m_pos;
     int snd_sin_wav;
 } cli;
 
@@ -48,7 +49,8 @@ void frame(void) {
     draw_pivot(0.2f, 0.0f);
     draw_dir(vec2(0.0f, 0.0f));
     draw_rad(0.1f);
-    draw_color(128, 128, 128, 255);
+    draw_color(0, 0, 255, 255);
+    draw_pos_vec(mouse_pos_world(cli.m_pos));
     draw();
 
     /*
@@ -78,6 +80,8 @@ void event(const sapp_event *ev) {
     case SAPP_EVENTTYPE_MOUSE_UP:;
     case SAPP_EVENTTYPE_MOUSE_DOWN:;
     case SAPP_EVENTTYPE_MOUSE_MOVE:;
+        cli.m_pos = vec2(ev->mouse_x, ev->mouse_x);
+        break;
     default: ;
     };
 }

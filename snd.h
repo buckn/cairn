@@ -21,7 +21,7 @@ void snd_debug_graph(float sample, int detail) {
 //sin wave synthesis function
 float snd_sin(int t, float hz, float amp, int sample_rate) {
     float value = sinf(hz * M_PI * 2.0f * t * (1.0f / sample_rate)) * amp;
-    snd_debug_graph(value, 10);
+    //snd_debug_graph(value, 10);
     return value;
 }
 

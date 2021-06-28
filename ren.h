@@ -83,8 +83,9 @@ void render_init(void) {
     };
 }
 
-Vec2 mouse_pos_world(float x, float y) {
-    Vec4 mouse_screen = vec4(x, y, 0.0f, 1.0f);
+Vec2 mouse_pos_world(Vec2 coord) {
+    Vec2 x = vec2(0.0f, 1.0f);
+    Vec4 mouse_screen = vec4_frm_2(coord, x);
     /* get it in 0..2.0f */
     mouse_screen.x /= sapp_widthf() / 2.0f;
     mouse_screen.y /= sapp_heightf() / 2.0f;
@@ -119,6 +120,10 @@ void draw_start(void) {
 void draw_pos(float x, float y) {
     _rcx_wip.pos.x = x;
     _rcx_wip.pos.y = y;
+}
+void draw_pos_vec(Vec2 coords) {
+    _rcx_wip.pos.x = coords.x;
+    _rcx_wip.pos.y = coords.y;
 }
 void draw_scale(float x, float y) {
     _rcx_wip.scale.x = x;
