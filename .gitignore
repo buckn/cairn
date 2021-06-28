@@ -9,3 +9,4 @@ client.glsl.h
 *.rdbg
 *.cap
 shaders.glsl.h
+.DS_Store
