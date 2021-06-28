@@ -22,6 +22,27 @@ typedef struct {
     float nums[4][4];
 } Mat4;
 
+/* float Functions */
+static inline float lerp(float a, float b, float t) {
+    return (a * (1.0 - t)) + (b * t);
+}
+
+static inline float rot_vec2(Vec2 rot) {
+    return atan2f(rot.y, rot.x);
+}
+
+static inline float dot2(Vec2 a, Vec2 b) {
+    return a.x*b.x + a.y*b.y;
+}
+
+static inline float mag2(Vec2 a) {
+    return sqrtf(dot2(a, a));
+}
+
+static inline float magmag2(Vec2 a) {
+    return dot2(a, a);
+}
+
 /* Vec4 Functions */
 Vec4 mul4x44(Mat4 m, Vec4 v) {
     Vec4 res;
@@ -58,10 +79,6 @@ static inline Vec2 vec2_f(float f) {
 
 static inline Vec2 vec2_rot(float rot) {
     return vec2(cosf(rot), sinf(rot));
-}
-
-static inline float rot_vec2(Vec2 rot) {
-    return atan2f(rot.y, rot.x);
 }
 
 static inline Vec2 add2(Vec2 a, Vec2 b) {
@@ -104,29 +121,12 @@ static inline Vec2 mul2_f(Vec2 a, float f) {
                 a.y * f);
 }
 
-static inline float dot2(Vec2 a, Vec2 b) {
-    return a.x*b.x + a.y*b.y;
-}
-
 static inline Vec2 lerp2(Vec2 a, Vec2 b, float t) {
     return add2(mul2_f(a, 1.0f - t), mul2_f(b, t));
 }
 
-static inline float mag2(Vec2 a) {
-    return sqrtf(dot2(a, a));
-}
-
-static inline float magmag2(Vec2 a) {
-    return dot2(a, a);
-}
-
 static inline Vec2 norm2(Vec2 a) {
     return div2_f(a, mag2(a));
-}
-
-/* float Functions */
-static inline float lerp(float a, float b, float t) {
-    return (a * (1.0 - t)) + (b * t);
 }
 
 /* Mat4 Functions */
