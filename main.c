@@ -50,7 +50,8 @@ void frame(void) {
     draw_dir(vec2(0.0f, 0.0f));
     draw_rad(0.1f);
     draw_color(0, 0, 255, 255);
-    draw_pos_vec(mouse_pos_world(cli.m_pos));
+    Vec2 position = mouse_pos_world(cli.m_pos);
+    draw_pos_vec(position);
     draw();
 
     /*
@@ -80,7 +81,7 @@ void event(const sapp_event *ev) {
     case SAPP_EVENTTYPE_MOUSE_UP:;
     case SAPP_EVENTTYPE_MOUSE_DOWN:;
     case SAPP_EVENTTYPE_MOUSE_MOVE:;
-        cli.m_pos = vec2(ev->mouse_x, ev->mouse_x);
+        cli.m_pos = vec2(ev->mouse_x, ev->mouse_y);
         break;
     default: ;
     };

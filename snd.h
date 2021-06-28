@@ -78,8 +78,7 @@ void snd_clbk(float* buffer, int num_frames, int num_channels) {
     		buffer[num_channels * i] = snd_add(frame_d, 0.5f);  // mono channel
             cli.snd_sin_wav++;
     	} else {
-    		buffer[num_channels * i] = 0;  // left channel
-            snd_debug_graph(0, 10);
+    		buffer[num_channels * i] = snd_sin(cli.snd_sin_wav, 1.0f, 0.0f, 44100);  // left channel
             cli.snd_sin_wav = 0;
     	}
     }

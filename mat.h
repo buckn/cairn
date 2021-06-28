@@ -10,8 +10,9 @@ typedef union {
 	Vec4 Struct
 */
 typedef union {
-    float nums[4];
     struct { float x, y, z, w; };
+    Vec2 xy;
+    float nums[4];
 } Vec4;
 
 /*
