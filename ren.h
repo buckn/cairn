@@ -85,7 +85,6 @@ void render_init(void) {
 
 Vec2 mouse_pos_world(Vec2 coord) {
     Vec4 mouse_screen = { coord.x, sapp_heightf() - coord.y, .w = 1.0f };
-    printf("mouse screen pos:  x: %f y: %f\n", coord.x, mouse_screen.y);
     /* get it in 0..2.0f */
     mouse_screen.x /= sapp_widthf() / 2.0f;
     mouse_screen.y /= sapp_heightf() / 2.0f;

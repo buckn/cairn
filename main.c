@@ -14,22 +14,27 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-//Math file include
+//math include
 #include "mat.h"
 
 //Client state static struct
 static struct {
-    /* ... */
-
     /* input */
     bool keys_down[SAPP_MAX_KEYCODES];
     Vec2 m_pos;
+
+    /* sound */
     int snd_sin_wav;
 } cli;
 
-//Include renderer and sound header files
-#include "ren.h"
+//sound include
 #include "snd.h"
+
+//renderer include
+#include "ren.h"
+
+//entities include
+#include "ent.h"
 
 void init(void) {
     render_init();
@@ -39,24 +44,7 @@ void init(void) {
 void frame(void) {
     frame_start();
 
-    /*
-        Frame drawing begins here
-    */
-    
-    //static rect
-    draw_start();
-    draw_scale(1.0f, 1.0f);
-    draw_pivot(0.2f, 0.0f);
-    draw_dir(vec2(0.0f, 0.0f));
-    draw_rad(0.1f);
-    draw_color(0, 0, 255, 255);
-    Vec2 position = mouse_pos_world(cli.m_pos);
-    draw_pos_vec(position);
-    draw();
 
-    /*
-        Frame drawing ends here
-    */
 
     draw_end();
 }
