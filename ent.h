@@ -44,8 +44,6 @@ void rndr_stn(Ent *entity) {
     draw_color(0, 0, 255, 255);
     Vec2 position = entity->pos;
     draw_pos_vec(position);
-
-    printf("rendered stone at: %f, %f\n", entity->dir.x, entity->dir.y);
 }
 
 void tick_stn(Ent *entity) {
@@ -54,7 +52,7 @@ void tick_stn(Ent *entity) {
 
     //spinnies
     //entity->dir.x = entity->dir.x + 0.3f;
-    entity->dir.y = entity->dir.y + 0.1f;
+    entity->dir = vec2_rot(rot_vec2(entity->dir) + 0.1);
 
     //move position by velocity
     entity->pos = add2(entity->pos, entity->vel);
