@@ -95,9 +95,12 @@ void rm_ent(int i) {
 
 void tick(Ent *entity) {
     switch (entity->kind) {
-        case None: /* do nothing if the entity is a none */;
-        case Stn: tick_stn(entity);
-        case WtrPrt: tick_wtr_prt(entity);
+        case None:
+            /* do nothing if the entity is a none */;
+        case Stn: 
+            tick_stn(entity);
+        case WtrPrt: 
+            tick_wtr_prt(entity);
     }
 }
 
@@ -110,9 +113,12 @@ void tick_all_ents() {
 void rndr(Ent *entity) {
     draw_start();
     switch (entity->kind) {
-        case None: /* do nothing if the entity is a none */;
-        case Stn: rndr_stn(entity);
-        case WtrPrt: rndr_wtr_prt(entity);
+        case None: 
+            /* do nothing if the entity is a none */;
+        case Stn: 
+            rndr_stn(entity);
+        case WtrPrt: 
+            rndr_wtr_prt(entity);
     }
     draw();
 }
