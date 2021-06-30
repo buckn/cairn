@@ -13,6 +13,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <sys/time.h>
 
 //math include
 #include "mat.h"
@@ -45,6 +46,8 @@ void init(void) {
 }
 
 void frame(void) {
+    clock_t current_ticks = clock();
+
     //entities physics tick
     tick_all_ents();
 
@@ -54,6 +57,13 @@ void frame(void) {
     rndr_all_ents();
 
     draw_end();
+
+    clock_t delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
+    clock_t fps = 0;
+    if(delta_ticks > 0) {
+        fps = CLOCKS_PER_SEC / delta_ticks;
+    }
+    printf("fps: %lu\n", fps);
 }
 
 void cleanup(void) {
