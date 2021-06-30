@@ -137,6 +137,7 @@ void draw_rot(float rot) {
     _rcx_wip.rot = rot;
 }
 void draw_dir(Vec2 dir) {
+    printf("    direction: %f\n", rot_vec2(dir));
     _rcx_wip.rot = rot_vec2(dir);
 }
 void draw_color(float r, float g, float b, float a) {

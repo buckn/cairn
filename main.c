@@ -39,12 +39,19 @@ static struct {
 void init(void) {
     render_init();
     snd_init();
+
+    //make new rock entity
+    add_ent(stn(vec2(0, 0)));
 }
 
 void frame(void) {
+    //entities physics tick
+    tick_all_ents();
+
     frame_start();
 
-
+    //render all entities
+    rndr_all_ents();
 
     draw_end();
 }

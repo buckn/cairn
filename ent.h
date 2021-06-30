@@ -1,5 +1,8 @@
+#define MAX_ENTITIES 1000
+
 //an enum for different types of physical entities
 enum EntTyp {
+    None,
     Stn,
     WtrPrt
 };
@@ -8,33 +11,56 @@ enum EntTyp {
 typedef struct {
     Vec2 pos;
     Vec2 vel;
+    Vec2 dir;
     float mass;
+    void *tethers[8];
     enum EntTyp kind;
 } Ent;
 
-Ent stn(float pos_i) {
+//Client state static struct
+static struct {
+    /* entities */
+    Ent entities[MAX_ENTITIES];
+} ent;
+
+Ent none() {
+    return (Ent) {
+        .kind = None
+    };
+}
+
+/* stone functions */
+Ent stn(Vec2 pos_i) {
     return (Ent) {
         .pos = pos_i,
         .kind = Stn,
     };
 }
 
-//Client state static struct
-static struct {
-    /* entities */
-    Ent entities[1000];
-} ent;
-
 void rndr_stn(Ent *entity) {
     draw_scale(1.0f, 1.0f);
-    draw_pivot(0.2f, 0.0f);
-    draw_dir(vec2(0.0f, 0.0f));
-    draw_rad(0.1f);
+    draw_dir(entity->dir);
+    draw_rad(0.0f);
     draw_color(0, 0, 255, 255);
-    Vec2 position = mouse_pos_world(entity->pos);
+    Vec2 position = entity->pos;
     draw_pos_vec(position);
+
+    printf("rendered stone at: %f, %f\n", entity->dir.x, entity->dir.y);
 }
 
+void tick_stn(Ent *entity) {
+    //gravity
+    entity->vel.y = entity->vel.y - 0.002f;
+
+    //spinnies
+    //entity->dir.x = entity->dir.x + 0.3f;
+    entity->dir.y = entity->dir.y + 0.1f;
+
+    //move position by velocity
+    entity->pos = add2(entity->pos, entity->vel);
+}
+
+/* water functions */
 Ent wtr_prt(float pos_i, float vel_i) {
     return (Ent) {
         .pos = pos_i,
@@ -45,26 +71,56 @@ Ent wtr_prt(float pos_i, float vel_i) {
 
 void rndr_wtr_prt(Ent *entity) {
     draw_scale(1.0f, 1.0f);
-    draw_pivot(0.2f, 0.0f);
-    draw_dir(vec2(0.0f, 0.0f));
+    draw_dir(entity->dir);
     draw_rad(0.1f);
     draw_color(0, 0, 255, 255);
-    Vec2 position = mouse_pos_world(entity->pos);
+    Vec2 position = entity->pos;
     draw_pos_vec(position);
 }
 
-void phys_tick(Ent *entity) {
-    
-
+void tick_wtr_prt(Ent *entity) {
     //move position by velocity
     entity->pos = add2(entity->pos, entity->vel);
+}
+
+void add_ent(Ent entity) {
+    for (int i = 0; i < MAX_ENTITIES; i++) {
+        if (ent.entities[i].kind != None) {
+            ent.entities[i] = entity;
+        }
+    }
+}
+
+void rm_ent(int i) {
+    ent.entities[i].kind = None;
+}
+
+void tick(Ent *entity) {
+    switch (entity->kind) {
+        case None: /* do nothing if the entity is a none */;
+        case Stn: tick_stn(entity);
+        case WtrPrt: tick_wtr_prt(entity);
+    }
+}
+
+void tick_all_ents() {
+    for (int i = 0; i < MAX_ENTITIES; i++) {
+        tick(&ent.entities[i]);
+    }
 }
 
 void rndr(Ent *entity) {
     draw_start();
     switch (entity->kind) {
+        case None: /* do nothing if the entity is a none */;
         case Stn: rndr_stn(entity);
         case WtrPrt: rndr_wtr_prt(entity);
     }
     draw();
+}
+
+void rndr_all_ents() {
+    for (int i = 0; i < MAX_ENTITIES; i++) {
+        rndr(&ent.entities[i]);
+    }
 }
