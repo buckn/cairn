@@ -11,8 +11,8 @@ enum EntTyp {
 typedef struct {
     Vec2 pos;
     Vec2 vel;
-    Vec2 dir;
-    float mass;
+    float rot;
+    float rot_vel;
     void *tethers[8];
     enum EntTyp kind;
 } Ent;
@@ -39,7 +39,7 @@ Ent stn(Vec2 pos_i) {
 
 void rndr_stn(Ent *entity) {
     draw_scale(1.0f, 1.0f);
-    draw_dir(entity->dir);
+    draw_rot(entity->rot);
     draw_rad(0.0f);
     draw_color(0, 0, 255, 255);
     Vec2 position = entity->pos;
@@ -51,8 +51,7 @@ void tick_stn(Ent *entity) {
     entity->vel.y = entity->vel.y - 0.002f;
 
     //spinnies
-    //entity->dir.x = entity->dir.x + 0.3f;
-    entity->dir = vec2_rot(rot_vec2(entity->dir) + 0.1);
+    entity->rot += 0.1;
 
     //move position by velocity
     entity->pos = add2(entity->pos, entity->vel);
@@ -69,7 +68,7 @@ Ent wtr_prt(float pos_i, float vel_i) {
 
 void rndr_wtr_prt(Ent *entity) {
     draw_scale(1.0f, 1.0f);
-    draw_dir(entity->dir);
+    draw_rot(entity->rot);
     draw_rad(0.1f);
     draw_color(0, 0, 255, 255);
     Vec2 position = entity->pos;
