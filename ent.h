@@ -92,8 +92,8 @@ void add_ent(Ent entity) {
     for (int i = 0; i < MAX_ENTITIES; i++) {
         if (ent.entities[i].kind == None) {
             ent.entities[i] = entity;
+            return;
         }
-        i = MAX_ENTITIES;
     }
 }
 
@@ -104,7 +104,6 @@ void rm_ent(int i) {
 void tick(Ent *entity) {
     switch (entity->kind) {
         case None:
-            printf("none tick\n");
             /* do nothing if the entity is a none */;
             break;
         case Stn: 
@@ -125,7 +124,6 @@ void tick_all_ents() {
 void rndr(Ent *entity) {
     switch (entity->kind) {
         case None:
-            printf("none render\n");
             /* do nothing if the entity is a none */;
         break;
         case Stn: 
