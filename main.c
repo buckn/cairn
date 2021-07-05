@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <sys/time.h>
+#include <time.h>
 
 //math include
 #include "mat.h"

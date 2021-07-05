@@ -38,17 +38,21 @@ Ent stn(Vec2 pos_i) {
 }
 
 void rndr_stn(Ent *entity) {
+    draw_start();
+
     draw_scale(1.0f, 1.0f);
     draw_rot(entity->rot);
     draw_rad(0.0f);
     draw_color(0, 0, 255, 255);
     Vec2 position = entity->pos;
     draw_pos_vec(position);
+
+    draw();
 }
 
 void tick_stn(Ent *entity) {
     //gravity
-    entity->vel.y = entity->vel.y - 0.002f;
+    entity->vel.y = entity->vel.y - 0.0001f;
 
     //spinnies
     entity->rot += 0.1;
@@ -67,12 +71,16 @@ Ent wtr_prt(float pos_i, float vel_i) {
 }
 
 void rndr_wtr_prt(Ent *entity) {
+    draw_start();
+
     draw_scale(1.0f, 1.0f);
     draw_rot(entity->rot);
     draw_rad(0.1f);
     draw_color(0, 0, 255, 255);
     Vec2 position = entity->pos;
     draw_pos_vec(position);
+
+    draw();
 }
 
 void tick_wtr_prt(Ent *entity) {
@@ -82,9 +90,10 @@ void tick_wtr_prt(Ent *entity) {
 
 void add_ent(Ent entity) {
     for (int i = 0; i < MAX_ENTITIES; i++) {
-        if (ent.entities[i].kind != None) {
+        if (ent.entities[i].kind == None) {
             ent.entities[i] = entity;
         }
+        i = MAX_ENTITIES;
     }
 }
 
@@ -95,11 +104,15 @@ void rm_ent(int i) {
 void tick(Ent *entity) {
     switch (entity->kind) {
         case None:
+            printf("none tick\n");
             /* do nothing if the entity is a none */;
+            break;
         case Stn: 
             tick_stn(entity);
+            break;
         case WtrPrt: 
             tick_wtr_prt(entity);
+            break;
     }
 }
 
@@ -110,16 +123,18 @@ void tick_all_ents() {
 }
 
 void rndr(Ent *entity) {
-    draw_start();
     switch (entity->kind) {
-        case None: 
+        case None:
+            printf("none render\n");
             /* do nothing if the entity is a none */;
+        break;
         case Stn: 
             rndr_stn(entity);
+            break;
         case WtrPrt: 
             rndr_wtr_prt(entity);
+            break;
     }
-    draw();
 }
 
 void rndr_all_ents() {
