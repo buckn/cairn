@@ -42,7 +42,6 @@ void rndr_stn(Ent *entity) {
     draw_start();
 
     draw_scale(1.0f, 1.0f);
-    draw_dir(entity->dir);
     draw_rad(0.0f);
     draw_color(0, 0, 255, 255);
     Vec2 position = entity->pos;
@@ -75,7 +74,7 @@ void rndr_wtr_prt(Ent *entity) {
     draw_start();
 
     draw_scale(1.0f, 1.0f);
-    draw_dir(entity->dir);
+    draw_rot(entity->rot);
     draw_rad(0.1f);
     draw_color(0, 0, 255, 255);
     Vec2 position = entity->pos;
@@ -93,8 +92,8 @@ void add_ent(Ent entity) {
     for (int i = 0; i < MAX_ENTITIES; i++) {
         if (ent.entities[i].kind == None) {
             ent.entities[i] = entity;
+            return;
         }
-        i = MAX_ENTITIES;
     }
 }
 
@@ -105,7 +104,6 @@ void rm_ent(int i) {
 void tick(Ent *entity) {
     switch (entity->kind) {
         case None:
-            printf("none tick\n");
             /* do nothing if the entity is a none */;
             break;
         case Stn: 
@@ -126,7 +124,6 @@ void tick_all_ents() {
 void rndr(Ent *entity) {
     switch (entity->kind) {
         case None:
-            printf("none render\n");
             /* do nothing if the entity is a none */;
         break;
         case Stn: 
