@@ -1,4 +1,4 @@
-name: CMake
+name: Native Ubuntu Test
 
 on:
   push:
@@ -26,8 +26,8 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: sudo apt install libxi-dev xorg-dev libasound2-dev
 
-    - name: Run Native
+    - name: Run script with build only option
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: bash ${{github.workspace}}/run.sh
+      run: bash ${{github.workspace}}/run.sh --build
       
