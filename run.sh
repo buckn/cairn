@@ -22,7 +22,7 @@ str="'$*'"
 
 # Make sure that sokol-tools-bin has been initiated, if not initiate it
 a=`ls ./sokol-tools-bin`
-if [[ -z $a ]]
+if [ -z $a ]
 then
 	git submodule update --init
 fi
@@ -47,10 +47,19 @@ else
 		emcmake cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel ../..
 		cmake --build .
 	else
-		echo desk
-		# native client build and run
-		cd build/native
-		cmake ../..
-		cmake --build . && ./game
+		if [ $str == "'--build'" ]
+		then
+			echo desk
+			# native client build and run
+			cd build/native
+			cmake ../..
+			cmake --build .
+		else
+			echo desk
+			# native client build and run
+			cd build/native
+			cmake ../..
+			cmake --build . && ./game
+		fi
 	fi
 fi
