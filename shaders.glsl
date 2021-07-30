@@ -41,7 +41,7 @@ void main() {
         alpha = smoothstep(radius, radius - thc, length(square_pos - cir_center));
     alpha = min(alpha, smoothstep(0.5f, 0.5f - thc, abs(square_pos.x)));
     alpha = min(alpha, smoothstep(0.5f, 0.5f - thc, abs(square_pos.y)));
-    frag_color.w = alpha;
+    frag_color.w = alpha * (color.w / 255);
 }
 @end
 

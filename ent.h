@@ -1,4 +1,5 @@
-#define MAX_ENTITIES 1000
+#define MAX_ENTITIES 10000
+#define BOUNDS 1.0
 
 //an enum for different types of physical entities
 enum EntTyp {
@@ -38,54 +39,13 @@ Ent stn(Vec2 pos_i) {
     };
 }
 
-void rndr_stn(Ent *entity) {
-    draw_start();
-
-    draw_scale(1.0f, 1.0f);
-    draw_rad(0.0f);
-    draw_color(0, 0, 255, 255);
-    Vec2 position = entity->pos;
-    draw_pos_vec(position);
-
-    draw();
-}
-
-void tick_stn(Ent *entity) {
-    //gravity
-    entity->vel.y = entity->vel.y - 0.0001f;
-
-    //rotate direction by spin
-    entity->rot = entity->rot + entity->spin;
-
-    //move position by velocity
-    entity->pos = add2(entity->pos, entity->vel);
-}
-
 /* water functions */
-Ent wtr_prt(float pos_i, float vel_i) {
+Ent wtr_prt(Vec2 pos_i, Vec2 vel_i) {
     return (Ent) {
         .pos = pos_i,
         .vel = vel_i,
         .kind = WtrPrt,
     };
-}
-
-void rndr_wtr_prt(Ent *entity) {
-    draw_start();
-
-    draw_scale(1.0f, 1.0f);
-    draw_rot(entity->rot);
-    draw_rad(0.1f);
-    draw_color(0, 0, 255, 255);
-    Vec2 position = entity->pos;
-    draw_pos_vec(position);
-
-    draw();
-}
-
-void tick_wtr_prt(Ent *entity) {
-    //move position by velocity
-    entity->pos = add2(entity->pos, entity->vel);
 }
 
 void add_ent(Ent entity) {
@@ -107,10 +67,34 @@ void tick(Ent *entity) {
             /* do nothing if the entity is a none */;
             break;
         case Stn: 
-            tick_stn(entity);
+            /* collisions */
+
+            
+
+            /* physics */
+
+            //gravity
+            entity->vel.y = entity->vel.y - 0.0001f;
+
+            //rotate direction by spin
+            entity->rot = entity->rot + entity->spin;
+
+            //move position by velocity
+            entity->pos = add2(entity->pos, entity->vel);
             break;
         case WtrPrt: 
-            tick_wtr_prt(entity);
+            //gravity
+            entity->vel.y = entity->vel.y - 0.0001f;
+
+            /* collisions */
+
+            //set vertical velocity to zero if hitting bottom of world
+            if (add2(entity->pos, entity->vel).y < -5.5) {
+                entity->vel.y = 0;
+            }
+
+            //move position by velocity
+            entity->pos = add2(entity->pos, entity->vel);
             break;
     }
 }
@@ -122,17 +106,31 @@ void tick_all_ents() {
 }
 
 void rndr(Ent *entity) {
+    if (entity->kind == None) {
+        //return if the entity is a none
+        return;
+    }
+    draw_start();
     switch (entity->kind) {
         case None:
             /* do nothing if the entity is a none */;
         break;
         case Stn: 
-            rndr_stn(entity);
+            draw_scale(1.0f, 1.0f);
+            draw_rad(0.1f);
+            draw_color(0, 0, 0, 128);
+            draw_pos_vec(entity->pos);
             break;
         case WtrPrt: 
-            rndr_wtr_prt(entity);
+            draw_scale(0.1f, 0.1f);
+            draw_rot(entity->rot);
+            draw_rad(0.5f);
+            draw_color(0, 0, 255, 255);
+            draw_pos_vec(entity->pos);
+            //printf("water particle rendering!");
             break;
     }
+    draw();
 }
 
 void rndr_all_ents() {

@@ -48,6 +48,12 @@ void init(void) {
 void frame(void) {
     clock_t current_ticks = clock();
 
+    //spawn water at mouse position when space bar held down
+
+    if (cli.keys_down[SAPP_KEYCODE_SPACE]) {
+        add_ent(wtr_prt(mouse_pos_world(cli.m_pos), vec2(0, 0)));
+    }
+
     //entities physics tick
     tick_all_ents();
 
