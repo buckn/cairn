@@ -12,10 +12,10 @@ enum EntTyp {
 typedef struct {
     Vec2 pos;
     Vec2 vel;
-    float rot;
+    Vec2 dir;
     float spin;
     float mass;
-    void *tethers[8];
+    Ent *tethers[8];
     enum EntTyp kind;
 } Ent;
 
@@ -24,6 +24,9 @@ static struct {
     /* entities */
     Ent entities[MAX_ENTITIES];
 } ent;
+
+//A function that returns the closest position that entity b could be translated to so that a and b do not collide anymore
+Vec2 collide(Ent a, Ent b) {}
 
 Ent none() {
     return (Ent) {
@@ -117,13 +120,14 @@ void rndr(Ent *entity) {
         break;
         case Stn: 
             draw_scale(1.0f, 1.0f);
+            draw_dir(entity->dir);
             draw_rad(0.1f);
             draw_color(0, 0, 0, 128);
             draw_pos_vec(entity->pos);
             break;
         case WtrPrt: 
             draw_scale(0.1f, 0.1f);
-            draw_rot(entity->rot);
+            draw_dir(entity->dir);
             draw_rad(0.5f);
             draw_color(0, 0, 255, 255);
             draw_pos_vec(entity->pos);
