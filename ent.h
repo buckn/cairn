@@ -1,5 +1,11 @@
 #define MAX_ENTITIES 1000
 
+//a union that represents a collider
+typedef struct {
+    float rad;
+    Vec2 rect;
+} Col;
+
 //an enum for different types of physical entities
 enum EntTyp {
     None,
@@ -16,13 +22,14 @@ typedef struct {
     float mass;
     void *tethers[8];
     enum EntTyp kind;
+    Col col;
 } Ent;
 
 //Client state static struct
 static struct {
     /* entities */
     Ent entities[MAX_ENTITIES];
-} ent;
+} ents;
 
 Ent none() {
     return (Ent) {
@@ -36,18 +43,6 @@ Ent stn(Vec2 pos_i) {
         .pos = pos_i,
         .kind = Stn,
     };
-}
-
-void rndr_stn(Ent *entity) {
-    draw_start();
-
-    draw_scale(1.0f, 1.0f);
-    draw_rad(0.0f);
-    draw_color(0, 0, 255, 255);
-    Vec2 position = entity->pos;
-    draw_pos_vec(position);
-
-    draw();
 }
 
 void tick_stn(Ent *entity) {
@@ -70,19 +65,6 @@ Ent wtr_prt(float pos_i, float vel_i) {
     };
 }
 
-void rndr_wtr_prt(Ent *entity) {
-    draw_start();
-
-    draw_scale(1.0f, 1.0f);
-    draw_rot(entity->rot);
-    draw_rad(0.1f);
-    draw_color(0, 0, 255, 255);
-    Vec2 position = entity->pos;
-    draw_pos_vec(position);
-
-    draw();
-}
-
 void tick_wtr_prt(Ent *entity) {
     //move position by velocity
     entity->pos = add2(entity->pos, entity->vel);
@@ -90,15 +72,15 @@ void tick_wtr_prt(Ent *entity) {
 
 void add_ent(Ent entity) {
     for (int i = 0; i < MAX_ENTITIES; i++) {
-        if (ent.entities[i].kind == None) {
-            ent.entities[i] = entity;
+        if (ents.entities[i].kind == None) {
+            ents.entities[i] = entity;
             return;
         }
     }
 }
 
 void rm_ent(int i) {
-    ent.entities[i].kind = None;
+    ents.entities[i].kind = None;
 }
 
 void tick(Ent *entity) {
@@ -117,7 +99,7 @@ void tick(Ent *entity) {
 
 void tick_all_ents() {
     for (int i = 0; i < MAX_ENTITIES; i++) {
-        tick(&ent.entities[i]);
+        tick(&ents.entities[i]);
     }
 }
 
@@ -127,16 +109,31 @@ void rndr(Ent *entity) {
             /* do nothing if the entity is a none */;
         break;
         case Stn: 
-            rndr_stn(entity);
+            draw_start();
+
+            draw_scale(1.0f, 1.0f);
+            draw_rad(0.0f);
+            draw_color(0, 0, 255, 255);
+            draw_pos_vec(entity->pos);
+
+            draw();
             break;
         case WtrPrt: 
-            rndr_wtr_prt(entity);
+            draw_start();
+
+            draw_scale(1.0f, 1.0f);
+            draw_rot(entity->rot);
+            draw_rad(0.1f);
+            draw_color(0, 0, 255, 255);
+            draw_pos_vec(entity->pos);
+
+            draw();
             break;
     }
 }
 
 void rndr_all_ents() {
     for (int i = 0; i < MAX_ENTITIES; i++) {
-        rndr(&ent.entities[i]);
+        rndr(&ents.entities[i]);
     }
 }
